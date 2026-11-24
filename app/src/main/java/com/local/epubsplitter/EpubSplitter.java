@@ -436,7 +436,7 @@ public class EpubSplitter {
         }
     }
 
-    private static void appendItem(StringBuilder sb, String id, String rel, String type, String props) {
+    private static void appendItem(StringBuilder sb, String id, String rel, String type, String props) throws Exception {
         sb.append("    <item id=\"").append(escapeXml(id))
                 .append("\" href=\"").append(escapeXml(encodePath(rel)))
                 .append("\" media-type=\"").append(escapeXml(type)).append("\"");
