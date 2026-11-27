@@ -3,7 +3,11 @@ name: Build EPUB Splitter APK
 on:
   push:
     branches: [ main, master ]
+    tags: [ 'v*' ]
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -31,3 +35,9 @@ jobs:
           name: epub-splitter-apk
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
+
+      - name: Create release
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${{ github.ref_name }}" app/build/outputs/apk/debug/app-debug.apk --title "${{ github.ref_name }}" --generate-notes
